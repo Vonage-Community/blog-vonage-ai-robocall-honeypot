@@ -4,6 +4,10 @@
     "path": "./server.js"
   },
   {
+    "type": "wait",
+    "delay": 1000
+  },
+  {
     "type": "typeText",
     "text": [
       "import Express from 'express';",
@@ -11,31 +15,6 @@
       "const app = new Express();",
       "const port = process.env.PORT || 3000;",
       "",
-      "// Handle promises",
-      "const catchAsync = (fn) => (req, res, next) => {",
-      "  fn(req, res, next).catch(next);",
-      "};",
-      "",
-      "// List of contacts",
-      "const contactNumbers = [",
-      "    {",
-      "      phone: '19999999991',",
-      "      record: false",
-      "    },",
-      "];",
-      "",
-      "// Setup endpoint",
-      "app.post('/contact', catchAsync(async (req, res) => {",
-      "    const { caller } = req.body;",
-      "    const contact = contactNumbers.find(({phone}) => caller);",
-      "",
-      "    if (contact) {",
-      "        res.status(200).json(contact);",
-      "        return",
-      "    }",
-      "",
-      "    res.status(404).json({record: true});",
-      "}));",
       "",
       "// Setup a 404 handler",
       "app.all('*', (req, res) => {",
@@ -57,7 +36,47 @@
       "// Start Express",
       "app.listen(port, () => {",
       "    log(`app listening on port ${port}`);",
-      "});"
+      "});",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "delay": 10
+  },
+  {
+    "type": "wait",
+    "delay": 1000
+  },
+  {
+    "type": "goto",
+    "line": 5 
+  },
+  {
+    "type": "typeText",
+    "text": [
+      "",
+      "// List of contacts",
+      "const contactNumbers = [",
+      "    {",
+      "      phone: '19999999991',",
+      "      record: false",
+      "    },",
+      "];",
+      "",
+      "// Setup endpoint",
+      "app.post('/contact', (req, res) => {",
+      "    const { caller } = req.body;",
+      "    const contact = contactNumbers.find(({phone}) => caller);",
+      "",
+      "    if (contact) {",
+      "        res.status(200).json(contact);",
+      "        return",
+      "    }",
+      "",
+      "    res.status(404).json({record: true});",
+      "});",
+      ""
     ],
     "delay": 10
   }
